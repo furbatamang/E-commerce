@@ -36,7 +36,7 @@ const Cart = () => {
     // console.log('fetched',fetchedProducts)
     return (
         <div>
-            <Announcement/>
+            
             <Navbar/>
             <div className='p-10'>
                 <div className='flex flex-col gap-y-4 items-center'>

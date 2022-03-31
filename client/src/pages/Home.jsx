@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 const Home = () => {
     return (
         <>
-            <Announcement/>
+            {/* <Announcement/> */}
             <Navbar/>
             <Slider />
             <h1 className='text-5xl text-center font-bold p-20'>Categories</h1>

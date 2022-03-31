@@ -22,7 +22,7 @@ const ProductList = () => {
 
     return (
         <div>
-            <Announcement/>
+            
             <Navbar/>
             <h1 className='p-5 text-2xl font-[900]'>Dresses</h1>
             <div className='flex justify-between p-5'>
