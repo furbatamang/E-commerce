@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProductStart, getProductSuccess, getProductFailure } from '../redux/cart';
 import axios from 'axios';
 const Cart = () => {
-    const {products, total} = useSelector(state => state.cart);
+    const {products, total, fetchedProducts} = useSelector(state => state.cart);
     const id = JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser?._id
     const dispatch = useDispatch()
     const fetchCart = async () => {
@@ -17,14 +17,14 @@ const Cart = () => {
         try{
             const {data} = await axios.get('http://localhost:3001/api/carts',{
                 headers:{
-                    token:JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser.token
+                    token:JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser?.token
                 }
             })
-            console.log(id === data[0].userId)
+            // console.log(id === data[0].userId)
             let products = data.filter(item => (id === item.userId)
                 
             )
-            dispatch(getProductSuccess(products))
+            // dispatch(getProductSuccess(products))
         }catch(err){
             console.log(err);
             dispatch(getProductFailure())
@@ -33,7 +33,7 @@ const Cart = () => {
     useEffect(() => {
         fetchCart()
     },[])
-    // console.log(products)
+    // console.log('fetched',fetchedProducts)
     return (
         <div>
             <Announcement/>

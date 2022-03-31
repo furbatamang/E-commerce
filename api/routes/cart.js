@@ -14,7 +14,7 @@ router.route('/')
             res.status(500).json(err)
         }
     })
-    .post(verifyTokenAndAuthorization, async (req, res) => {
+    .post(verifyToken, async (req, res) => {
         const newCart = new Cart(req.body);
 
         try{

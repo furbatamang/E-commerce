@@ -31,7 +31,7 @@ const cartSlice = createSlice({
         },
         getProductSuccess:(state,action) => {
             state.fetching = false;
-            state.fetchedProducts = action.payload;
+            state.fetchedProducts.push(action.payload);
         },
         getProductFailure: (state) => {
             state.error = true;

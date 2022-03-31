@@ -12,7 +12,9 @@ const Home = () => {
             <Announcement/>
             <Navbar/>
             <Slider />
+            <h1 className='text-5xl text-center font-bold p-20'>Categories</h1>
             <Category/>
+            <h1 className='text-5xl text-center font-bold p-20'>Recent Products</h1>
             <Products/>
             <Newsletter />
             <Footer />

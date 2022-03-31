@@ -20,7 +20,7 @@ const SingleProduct = () => {
     const [color, setColor] = useState("black");
     const [size, setSize] = useState("S");
 
-    console.log(products)
+    // console.log(products)
     const dispatch = useDispatch()
     useEffect(() => {
         setTimeout(() => {
@@ -48,6 +48,7 @@ const SingleProduct = () => {
 
     const handleClick = async (e) => {
         dispatch(addProductStart())
+        console.log(JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.token)
         try{
             const res = await axios.post('http://localhost:3001/api/carts',{
                 userId,
