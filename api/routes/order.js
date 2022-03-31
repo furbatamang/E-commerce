@@ -1,4 +1,4 @@
-const {verifyTokenAndAdmin, verifyTokenAndAuthorization} = require('./verifyToken');
+const {verifyTokenAndAdmin, verifyTokenAndAuthorization, verifyToken} = require('./verifyToken');
 const Order = require('../models/Order');
 const router = require('express').Router();
 
@@ -14,7 +14,7 @@ router.route('/')
             res.status(500).json(err)
         }
     })
-    .post(verifyTokenAndAuthorization, async (req, res) => {
+    .post(verifyToken, async (req, res) => {
         const newOrder = new Order(req.body);
         try{
            const order =  await newOrder.save();

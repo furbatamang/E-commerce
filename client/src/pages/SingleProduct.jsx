@@ -12,14 +12,14 @@ import { useDispatch,useSelector } from 'react-redux';
 import { addProductSuccess,addProductStart, addProductFailure } from '../redux/cart';
 
 const SingleProduct = () => {
-    const userId = JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser?._id;
+    const userId = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser._id;
     const {products, total} = useSelector(state => state.cart)
     const id = useLocation().pathname.split("/")[2];
     const [singleProduct, setSingleProduct] = useState({});
     const [amount, setAmount] = useState(1);
     const [color, setColor] = useState("black");
     const [size, setSize] = useState("S");
-    const [error, setError] = useState(false)
+
     console.log(products)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -48,12 +48,11 @@ const SingleProduct = () => {
 
     const handleClick = async (e) => {
         dispatch(addProductStart())
-        // console.log(JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.token)
+        console.log(JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.token)
         try{
             const res = await axios.post('http://localhost:3001/api/carts',{
                 userId,
-                products,
-                quantity:amount
+                products
             },{
                 headers:{
                     token:JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.token
@@ -63,14 +62,13 @@ const SingleProduct = () => {
             dispatch(addProductSuccess({...singleProduct, amount, color, size}))
         }catch(err){
             console.log(err);
-            setError(true);
             dispatch(addProductFailure())
         }
         
     }
     return (
         <>
-            
+            <Announcement/>
             <Navbar/>
             {
                 Object.keys(singleProduct).length !== 0 ? 
@@ -115,18 +113,15 @@ const SingleProduct = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='flex items-center gap-x-10 align-center'>
+                        <div className='flex items-center gap-x-10'>
                             <div className='flex gap-x-2 items-center '>
                                 <MinusIcon onClick={() => handleAmount('dec')} className="cursor-pointer"/>
                                 <span className=' px-3 border-2 border-teal-500 rounded-lg'>{amount}</span>
                                 <AddIcon onClick={() => handleAmount('inc')} className="cursor-pointer"/>
                             </div>
-                            <div className='flex flex-col'>
-                                <button className='border-4 border-teal-500 py-3 px-2' onClick={handleClick}>
-                                    ADD TO CART
-                                </button>
-                                {error ? <p className='text-red-500'>Please login first</p> : ''}
-                            </div>
+                            <button className='border-4 border-teal-500 py-3 px-2' onClick={handleClick}>
+                                ADD TO CART
+                            </button>
                         </div>
                     </div>
                 </div>

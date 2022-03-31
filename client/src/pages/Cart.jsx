@@ -11,6 +11,7 @@ import axios from 'axios';
 const Cart = () => {
     const {products, total, fetchedProducts} = useSelector(state => state.cart);
     const id = JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser?._id
+    const userName = JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser?.username
     const dispatch = useDispatch()
     const fetchCart = async () => {
         dispatch(getProductStart());
@@ -24,7 +25,7 @@ const Cart = () => {
             let products = data.filter(item => (id === item.userId)
                 
             )
-            // dispatch(getProductSuccess(products))
+            dispatch(getProductSuccess(products))
         }catch(err){
             console.log(err);
             dispatch(getProductFailure())
@@ -33,10 +34,31 @@ const Cart = () => {
     useEffect(() => {
         fetchCart()
     },[])
-    // console.log('fetched',fetchedProducts)
+
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+        
+        try{
+            const res = await axios.post('http://localhost:3001/api/orders',{
+                userName,
+                products,
+                amount:total,
+            },
+            {
+                headers:{
+                    token:JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser?.token
+                }
+            })
+            
+        }catch(err){
+            console.log(err)
+        }
+    }
+    console.log(total)
     return (
         <div>
-            
+            <Announcement/>
             <Navbar/>
             <div className='p-10'>
                 <div className='flex flex-col gap-y-4 items-center'>
@@ -99,7 +121,7 @@ const Cart = () => {
                                     <h4>Total</h4>
                                     <p>${total}</p>
                                 </div>
-                                <button className='border bg-gray-100 px-2 rounded-sm border-black'>CHECKOUT NOW</button>
+                                <button className='border bg-gray-100 px-2 rounded-sm border-black' onClick={handleClick}>CHECKOUT NOW</button>
                             </div>
                         </div>
                     </div>
