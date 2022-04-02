@@ -1,8 +1,9 @@
 import React,{useState} from 'react'
-import { loginStart, loginFail, loginSuccess } from '../redux/user';
+import { loginStart, loginFail, loginSuccess, setError } from '../redux/user';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
 const Login = () => {
     const dispatch = useDispatch()
     const {fetching, error} = useSelector(state => state.user)
@@ -29,6 +30,9 @@ const Login = () => {
         }catch(err){
             console.log('error',err);
             dispatch(loginFail())
+            setTimeout(() => {
+                dispatch(setError())
+            },2000)
         }
 
     }

@@ -1,7 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import { loginFail, loginStart, loginSuccess } from '../../redux/user';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Redirect} from 'react-router-dom';
 import axios from 'axios';
 const Login = () => {
     const history = useHistory();
@@ -11,7 +11,6 @@ const Login = () => {
         password:'' 
         
     })
-
     const changeHandler = (e) => {
         const {name, value} = e.target;
         setInfo({
@@ -27,7 +26,8 @@ const Login = () => {
         try{
             const res = await axios.post('http://localhost:3001/api/auth/login', info)
             dispatch(loginSuccess(res.data));
-            history.push('/dashboard')
+            window.location.replace('http://localhost:3000/dashboard')
+            console.log('loginsuccess')
         }catch(err){
             console.log(err)
             dispatch(loginFail())

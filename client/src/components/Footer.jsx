@@ -14,7 +14,7 @@ const Footer = () => {
     return (
         <div className='flex justify-between p-4 gap-x-10'>
             <div className='flex-1 flex flex-col gap-y-4 px-4'>
-                <h1 className='text-4xl font-bold'>SHOP</h1>
+                <h1 className='text-4xl font-bold'>DELIGHT</h1>
                 <p>
                     There are many variations of passages of Lorem Ipsum available, but
                     the majority have suffered alteration in some form, by injected
@@ -47,15 +47,15 @@ const Footer = () => {
                 <div className='flex flex-col gap-y-5'>
                     <div className='flex gap-x-2'>
                         <LocationIcon />
-                        <p>Bharatpur-9, Chitwan, Narayanghat</p>
+                        <p>Bharatpur-10, Chitwan</p>
                     </div>
                     <div className='flex gap-x-2'>
                         <CallIcon />
-                        <p>+977 9845357012</p>
+                        <p>+977 9817544754</p>
                     </div>
                     <div className='flex gap-x-2'>
                         <MailIcon/>
-                        <p>lamasandesh400@gmail.com</p>
+                        <p>delight@gmail.com</p>
                     </div>
                     <div className='flex gap-x-4'>
                         <MasterCardIcon/>

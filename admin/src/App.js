@@ -14,7 +14,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 function App() {
   
   // console.log(JSON.parse(localStorage.getItem('persist:root')).currentUser)
-  const admin = JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user).currentUser.isAdmin;
+  const admin = localStorage.getItem('persist:root') ? JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user)?.currentUser?.isAdmin : false
   // console.log(admin)
   return (
     <Router>

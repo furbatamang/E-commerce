@@ -1,4 +1,5 @@
 import "./sidebar.css";
+import { useHistory } from "react-router-dom";
 import {
   LineStyle,
   Timeline,
@@ -16,6 +17,13 @@ import {
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 export default function Sidebar() {
+  const history = useHistory()
+  const logout =() => {
+    // localStorage.setItem('persist:root',false);
+    // console.log(history)
+    // history.push("/")
+    // console.log('this')
+  }
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -53,14 +61,11 @@ export default function Sidebar() {
                 Products
               </li>
             </NavLink>
-            {/* <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
-            </li>
-            <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Reports
+            {/* <li className="sidebarListItem" onClick={logout}>
+              
+              Logout
             </li> */}
+            
           </ul>
         </div>
         {/* <div className="sidebarMenu">

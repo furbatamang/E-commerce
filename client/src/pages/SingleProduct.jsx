@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Newsletter from '../components/Newsletter';
@@ -12,14 +11,14 @@ import { useDispatch,useSelector } from 'react-redux';
 import { addProductSuccess,addProductStart, addProductFailure } from '../redux/cart';
 
 const SingleProduct = () => {
-    const userId = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser._id;
+    const userId = JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user)?.currentUser?._id;
     const {products, total} = useSelector(state => state.cart)
     const id = useLocation().pathname.split("/")[2];
     const [singleProduct, setSingleProduct] = useState({});
     const [amount, setAmount] = useState(1);
     const [color, setColor] = useState("black");
     const [size, setSize] = useState("S");
-
+    const [error, setError] = useState(false)
     console.log(products)
     const dispatch = useDispatch()
     useEffect(() => {
@@ -48,27 +47,30 @@ const SingleProduct = () => {
 
     const handleClick = async (e) => {
         dispatch(addProductStart())
-        console.log(JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.token)
         try{
             const res = await axios.post('http://localhost:3001/api/carts',{
                 userId,
                 products
             },{
                 headers:{
-                    token:JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.token
+                    token:JSON.parse(JSON.parse(localStorage.getItem('persist:root'))?.user)?.currentUser?.token
                 }
             })
             console.log(res)
             dispatch(addProductSuccess({...singleProduct, amount, color, size}))
         }catch(err){
             console.log(err);
+            setTimeout(() => {
+                setError(false)
+            },5000)
+            setError(true)
             dispatch(addProductFailure())
         }
         
     }
     return (
         <>
-            <Announcement/>
+           
             <Navbar/>
             {
                 Object.keys(singleProduct).length !== 0 ? 
@@ -119,9 +121,16 @@ const SingleProduct = () => {
                                 <span className=' px-3 border-2 border-teal-500 rounded-lg'>{amount}</span>
                                 <AddIcon onClick={() => handleAmount('inc')} className="cursor-pointer"/>
                             </div>
-                            <button className='border-4 border-teal-500 py-3 px-2' onClick={handleClick}>
-                                ADD TO CART
-                            </button>
+                            {
+                                <div className='flex flex-col'>
+                                
+                                <button className='border-4 border-teal-500 py-3 px-2' onClick={handleClick}>
+                                    ADD TO CART
+                                </button>
+                                {error ? <p className='text-red-500'>Please login!</p> : ''}
+                                </div>
+                            }
+                           
                         </div>
                     </div>
                 </div>

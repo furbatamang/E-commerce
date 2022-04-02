@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {ReactComponent as SearchIcon} from '../assets/icons/search.svg';
 import {ReactComponent as CartIcon} from '../assets/icons/cart.svg';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logOutSuccess } from '../redux/user';
 const Navbar = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {quantity} = useSelector(state => state.cart);
     const {currentUser} = useSelector(state => state.user);
+    const logout = () => {
+        dispatch(logOutSuccess())
+        localStorage.setItem('persist:root','')
+        navigate('/')
+        
+    }
+    // useEffect(() => {
+
+    // },[logout])
     return (
         <>
         <div className='flex justify-between p-3'>
@@ -17,12 +30,17 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className='flex-1 text-center'>
-                    <h1 className='font-bold text-xl'><Link to='/'>SHOP</Link></h1>
+                    <h1 className='font-bold text-xl'><Link to='/'>DELIGHT</Link></h1>
                 </div>
                 <div className='flex-1 flex items-center gap-x-5 justify-end'>
                     {
                                             
-                        currentUser && Object.keys(currentUser).length > 0 ? (<p>{currentUser.username.toUpperCase()}</p>):
+                        currentUser && Object.keys(currentUser).length > 0 ? (
+                        <div className='flex'>
+                            <p>{currentUser.username.toUpperCase()}</p>
+                            <p className='ml-5 cursor-pointer' onClick={logout}>LOGOUT</p>
+                        </div>
+                        ):
                         (
                         <>                            
                                 <p className='cursor-pointer'><Link to='/login'>LOGIN</Link></p>

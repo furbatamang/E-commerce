@@ -12,12 +12,13 @@ export default function ProductList() {
 
   const dispatch = useDispatch();
   const products = useSelector(state => state.product.products)
-  console.log(products)
+  
   const getProducts = async () => {
     dispatch(getProductStart());
     try{
+      console.log('product list called')
       const res = await axios.get('http://localhost:3001/api/products');
-      console.log(res.data);
+      
       dispatch(getProductSuccess(res.data))
     }catch(err){
       console.log(err)
@@ -27,8 +28,9 @@ export default function ProductList() {
 
   
   useEffect(() => {
+    
     getProducts()
-  },[])
+  },[dispatch])
   const handleDelete = async (id) => {
       dispatch(deleteProductStart());
       try{
@@ -91,7 +93,7 @@ export default function ProductList() {
         rows={products}
         disableSelectionOnClick
         columns={columns}
-        getRowId={row => row._id}
+        getRowId={(row) => row._id}
         pageSize={8}
         checkboxSelection
       />

@@ -4,10 +4,14 @@ const {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require(
 
 //product crud operation
 
+
+
+// const storage = multer.diskStorage
 // Create Product
 router.route('/')
     // get all products
     .get(async (req, res) => {
+        console.log('getMethod')
         const query = req.query.new;
         const qcategory = req.query.category;
         try{
@@ -29,6 +33,7 @@ router.route('/')
         }
     })
     .post(verifyTokenAndAdmin, async (req, res) => {
+       console.log(req.body)
         const newProduct = new Product(req.body);
         
         try{
